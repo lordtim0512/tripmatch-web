@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Einladung zu TripMatch</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Du bist zu einer Reiseplanung bei TripMatch eingeladen.">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #252525;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 28px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(11, 18, 32, 0.22);
+  }
+  h1 { font-size: 26px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.4px; }
+  p { font-size: 16px; line-height: 1.5; color: #717182; margin: 0 0 20px; }
+  .code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    padding: 18px 12px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    color: #fff;
+    margin-bottom: 22px;
+  }
+  .code[hidden] { display: none; }
+  a.button {
+    display: block;
+    padding: 16px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 14px;
+  }
+  .hint { font-size: 14px; line-height: 1.5; color: #9a9aa8; margin: 0; }
+  footer { margin-top: 24px; font-size: 13px; }
+  footer a { color: #717182; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Du bist eingeladen</h1>
+  <p>Jemand plant mit TripMatch eine Reise und m&ouml;chte, dass du mitentscheidest.</p>
+
+  <div class="code" id="code" hidden></div>
+
+  <a class="button" id="open" href="tripmatch://join">In der App &ouml;ffnen</a>
+
+  <!-- STORE-LINKS: Sobald die App im App Store und bei Google Play liegt
+       (E7), gehoeren hier zwei Knoepfe hin. Bis dahin waere jeder Link eine
+       Sackgasse, und ein toter Store-Knopf ist schlimmer als keiner. -->
+  <p class="hint" id="hint">
+    Du hast TripMatch noch nicht? Dann installiere die App und gib den Code
+    oben unter &bdquo;Reise beitreten&ldquo; ein.
+  </p>
+
+  <!-- Fusszeile mit dem Datenschutz-Link erscheint, sobald es die Seite gibt. -->
+</main>
+
+<script>
+  // Der Code steht in der Adresse als ?c=ABC123. Ein Pfad wie /join/ABC123
+  // waere huebscher, aber GitHub Pages liefert nur statische Dateien aus und
+  // kennt keine Platzhalter im Pfad — das waere dort ein 404.
+  var raw = new URLSearchParams(location.search).get('c') || '';
+  var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+
+  if (code.length === 6) {
+    var box = document.getElementById('code');
+    box.textContent = code;
+    box.hidden = false;
+    document.getElementById('open').href = 'tripmatch://join/' + code;
+  } else {
+    // Ohne Code kann der Knopf nichts ausrichten — dann bleibt nur der Weg
+    // ueber die Eingabe von Hand.
+    document.getElementById('open').remove();
+    document.getElementById('hint').textContent =
+      'In diesem Link fehlt der Einladungscode. Frag noch einmal nach — sechs Zeichen, die du in der App unter „Reise beitreten“ eingibst.';
+  }
+</script>
+</body>
+</html>
