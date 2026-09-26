@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum — TripMatch</title>
+<meta name="description" content="Impressum der App TripMatch nach § 5 DDG.">
+<style>
+  /* Systemschriften statt geladener Webfonts: Eine Rechtstext-Seite, die
+     Google Fonts nachlaedt, uebermittelt die IP-Adresse ihrer Leser an
+     einen Dritten — bei einem Impressum genauso unpassend wie bei einer
+     Datenschutzerklaerung. */
+  :root {
+    --sky: #2F7BEA;
+    --coral: #FF6B6B;
+    --text: #252525;
+    --muted: #717182;
+    --bg: #F5F6F9;
+    --surface: #FFFFFF;
+    --border: rgba(17, 17, 26, 0.1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1.25rem 5rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  main { max-width: 44rem; margin: 0 auto; }
+  header {
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(90deg, #60A5FA, var(--coral)) 1;
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 .35rem; letter-spacing: -.02em; }
+  .app { color: var(--muted); margin: 0; font-size: 1rem; }
+  h2 { font-size: 1.15rem; line-height: 1.3; margin: 2.25rem 0 .5rem; }
+  p { margin: 0 0 1rem; }
+  .block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 1.35rem;
+    margin-bottom: 1rem;
+  }
+  .block p:last-child { margin-bottom: 0; }
+  .klein { font-size: .95rem; color: var(--muted); }
+  a { color: var(--sky); }
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: #ECECEF;
+      --muted: #9A9AA8;
+      --bg: #101014;
+      --surface: #1A1A20;
+      --border: rgba(255, 255, 255, 0.12);
+      --sky: #7FB4FF;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Impressum</h1>
+    <p class="app">Angaben gem&auml;&szlig; § 5 DDG f&uuml;r die App TripMatch</p>
+  </header>
+
+  <h2>Diensteanbieter</h2>
+  <div class="block">
+    <p>Tim Hoffmann<br>Rotkamp 37<br>13053 Berlin</p>
+  </div>
+
+  <h2>Kontakt</h2>
+  <div class="block">
+    <p><a href="mailto:th.app-development@gmx.de">th.app-development@gmx.de</a></p>
+    <p class="klein">Anfragen zum Datenschutz — Auskunft, Berichtigung, L&ouml;schung — gehen an dieselbe Adresse.</p>
+  </div>
+
+  <h2>Verantwortlich f&uuml;r den Inhalt</h2>
+  <div class="block">
+    <p>Tim Hoffmann, Anschrift wie oben.</p>
+    <p class="klein">TripMatch ist ein privates Projekt: keine Umsatzsteuer-Identifikationsnummer, kein Registereintrag, keine Aufsichtsbeh&ouml;rde im Sinne des § 5 DDG.</p>
+  </div>
+
+  <h2>Bildnachweis</h2>
+  <div class="block">
+    <p class="klein">Die Fotos der Reiseziele stammen von <a href="https://unsplash.com" rel="noopener">Unsplash</a> und stehen unter der Unsplash-Lizenz. Die Zuordnung der einzelnen Urheber steht in der Datei ATTRIBUTIONS.md im Quellcode des Projekts.</p>
+  </div>
+
+  <footer>
+    Stand: 20. September 2026 · <a href="../datenschutz/">Datenschutzerkl&auml;rung</a> ·
+    Diese Seite l&auml;dt keine Inhalte von Dritten und setzt keine Cookies.
+  </footer>
+</main>
+</body>
+</html>
