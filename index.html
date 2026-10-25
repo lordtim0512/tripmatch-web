@@ -3,101 +3,187 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Einladung zu TripMatch</title>
-<meta name="robots" content="noindex">
-<meta name="description" content="Du bist zu einer Reiseplanung bei TripMatch eingeladen.">
+<title>TripMatch — Reiseziele gemeinsam finden</title>
+<meta name="description" content="Swipen statt diskutieren: Mit TripMatch findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-1.613%20-1.613%203.226%203.226%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22f%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2360A5FA%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF6B6B%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%22-1.613%22%20y%3D%22-1.613%22%20width%3D%223.226%22%20height%3D%223.226%22%20fill%3D%22url(%23f)%22%2F%3E%3Ccircle%20r%3D%220.91%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%220.18%22%2F%3E%3Cpolygon%20points%3D%220.289%2C-0.593%200.13%2C0.064%20-0.13%2C-0.064%22%20fill%3D%22%23fff%22%2F%3E%3Cpolygon%20points%3D%22-0.289%2C0.593%200.13%2C0.064%20-0.13%2C-0.064%22%20fill%3D%22%23fff%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E">
 <style>
-  :root { color-scheme: light; }
+  :root {
+    color-scheme: light;
+    --text: #252525;
+    --muted: #717182;
+    --bg: #F5F6F9;
+    --surface: #FFFFFF;
+  }
   * { box-sizing: border-box; }
+  html, body { margin: 0; }
   body {
-    margin: 0;
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    flex-direction: column;
+    background: var(--bg);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #252525;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
   }
+
+  /* Oben ein Schimmer des Verlaufs, damit die Seite nicht grau anfaengt. */
+  .glow {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 520px;
+    background:
+      radial-gradient(60% 70% at 30% 0%, #60A5FA33, transparent 70%),
+      radial-gradient(60% 70% at 75% 10%, #FF6B6B2e, transparent 70%);
+    pointer-events: none;
+  }
+
   main {
+    position: relative;
+    flex: 1;
     width: 100%;
-    max-width: 420px;
-    background: #fff;
-    border-radius: 28px;
-    padding: 32px 24px;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 72px 16px 40px;
     text-align: center;
-    box-shadow: 0 12px 40px rgba(11, 18, 32, 0.22);
   }
-  h1 { font-size: 26px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.4px; }
-  p { font-size: 16px; line-height: 1.5; color: #717182; margin: 0 0 20px; }
-  .code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 34px;
-    font-weight: 700;
-    letter-spacing: 6px;
-    padding: 18px 12px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
-    color: #fff;
-    margin-bottom: 22px;
+
+  .logo {
+    width: 168px;
+    height: 168px;
+    margin: 0 auto 28px;
+    border-radius: 38px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(96, 120, 200, 0.35), 0 4px 12px rgba(11, 18, 32, 0.12);
   }
-  .code[hidden] { display: none; }
-  a.button {
-    display: block;
-    padding: 16px;
-    border-radius: 24px;
+  .logo svg { display: block; width: 100%; height: 100%; }
+
+  h1 {
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -1.6px;
+    margin: 0 0 14px;
+    font-weight: 800;
+  }
+  .claim {
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0 auto 36px;
+    max-width: 400px;
+  }
+
+  a.store {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 999px;
     background: linear-gradient(135deg, #60A5FA, #FF6B6B);
     color: #fff;
     font-size: 17px;
     font-weight: 700;
     text-decoration: none;
-    margin-bottom: 14px;
+    box-shadow: 0 10px 28px rgba(255, 107, 107, 0.3);
+    transition: transform 0.15s ease;
   }
-  .hint { font-size: 14px; line-height: 1.5; color: #9a9aa8; margin: 0; }
-  footer { margin-top: 24px; font-size: 13px; }
-  footer a { color: #717182; }
+  a.store:active { transform: scale(0.97); }
+
+  .schritte {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 56px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .schritte li {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 20px 14px;
+    box-shadow: 0 4px 16px rgba(11, 18, 32, 0.06);
+  }
+  .nr {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 32px;
+    text-align: center;
+  }
+  .schritte strong { display: block; font-size: 16px; }
+
+  .rezensionen {
+    display: grid;
+    gap: 12px;
+    margin-top: 48px;
+    text-align: left;
+  }
+  .rezension {
+    margin: 0;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(11, 18, 32, 0.06);
+  }
+  .sterne { color: #F5A524; font-size: 16px; letter-spacing: 2px; margin-bottom: 8px; }
+  .rezension strong { display: block; font-size: 16px; margin-bottom: 6px; }
+  .rezension blockquote { margin: 0 0 12px; font-size: 15px; line-height: 1.55; }
+  .rezension figcaption { font-size: 13px; color: var(--muted); }
+
+  footer {
+    position: relative;
+    padding: 24px 16px 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 520px) {
+    main { padding-top: 56px; }
+    .logo { width: 136px; height: 136px; border-radius: 31px; }
+    h1 { font-size: 42px; }
+    .claim { font-size: 17px; }
+    .schritte { grid-template-columns: 1fr; text-align: left; }
+    .schritte li { display: flex; align-items: center; gap: 14px; padding: 16px; }
+    .nr { flex: none; margin: 0; }
+  }
 </style>
 </head>
 <body>
+<div class="glow"></div>
 <main>
-  <h1>Du bist eingeladen</h1>
-  <p>Jemand plant mit TripMatch eine Reise und m&ouml;chte, dass du mitentscheidest.</p>
+  <div class="logo" role="img" aria-label="TripMatch-Logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.613 -1.613 3.226 3.226"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient></defs><rect x="-1.613" y="-1.613" width="3.226" height="3.226" fill="url(#g)"/><circle r="0.91" fill="none" stroke="#fff" stroke-width="0.18"/><polygon points="0.289,-0.593 0.13,0.064 -0.13,-0.064" fill="#fff"/><polygon points="-0.289,0.593 0.13,0.064 -0.13,-0.064" fill="#fff" fill-opacity="0.4"/></svg></div>
+  <h1>TripMatch</h1>
+  <p class="claim">Swipen statt diskutieren: So findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.</p>
 
-  <div class="code" id="code" hidden></div>
+  <a class="store" href="https://apps.apple.com/de/app/tripmatch/id6817438689">Im App Store laden</a>
 
-  <a class="button" id="open" href="tripmatch://join">In der App &ouml;ffnen</a>
+  <ol class="schritte">
+    <li><div class="nr">1</div><strong>Gruppe gr&uuml;nden</strong></li>
+    <li><div class="nr">2</div><strong>Swipen</strong></li>
+    <li><div class="nr">3</div><strong>Match finden</strong></li>
+  </ol>
 
-  <!-- STORE-LINKS: Sobald die App im App Store und bei Google Play liegt
-       (E7), gehoeren hier zwei Knoepfe hin. Bis dahin waere jeder Link eine
-       Sackgasse, und ein toter Store-Knopf ist schlimmer als keiner. -->
-  <p class="hint" id="hint">
-    Du hast TripMatch noch nicht? Dann installiere die App und gib den Code
-    oben unter &bdquo;Reise beitreten&ldquo; ein.
-  </p>
-
-  <!-- Fusszeile mit dem Datenschutz-Link erscheint, sobald es die Seite gibt. -->
+  <section class="rezensionen" aria-label="Rezensionen">
+    <figure class="rezension">
+      <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <strong>Spannende Lösung für Urlaubssuche</strong>
+      <blockquote>Normalerweise ist es schwer mit den Jungs ein gemeinsames Urlaubsziel zu finden, was am Ende auch für alle passt. Diese App löst jedoch auf spielerische Weise dieses Problem.<br><br>Klare Weiterempfehlung👍</blockquote>
+      <figcaption>abecki1609 &middot; App Store</figcaption>
+    </figure>
+    <figure class="rezension">
+      <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <strong>Perfekte App für die nächste Reise! ⭐⭐⭐⭐⭐</strong>
+      <blockquote>TripMatch ist eine richtig coole und innovative App! Die Idee, Reiseziele gemeinsam mit Freunden zu entdecken und den nächsten Urlaub unkompliziert zu planen, finde ich einfach genial. Die App macht Lust darauf, neue Orte kennenzulernen, gemeinsam Abenteuer zu erleben und unvergessliche Erinnerungen zu schaffen. Besonders das Konzept, die Reiseplanung mit Freunden zu verbinden, hebt TripMatch von anderen Apps ab. Eine tolle Idee mit viel Potenzial – ich freue mich darauf, die App weiter zu nutzen und kann sie jedem empfehlen, der gerne reist! 🌍✈️</blockquote>
+      <figcaption>DAchla7 &middot; App Store</figcaption>
+    </figure>
+  </section>
 </main>
-
-<script>
-  // Der Code steht in der Adresse als ?c=ABC123. Ein Pfad wie /join/ABC123
-  // waere huebscher, aber GitHub Pages liefert nur statische Dateien aus und
-  // kennt keine Platzhalter im Pfad — das waere dort ein 404.
-  var raw = new URLSearchParams(location.search).get('c') || '';
-  var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-
-  if (code.length === 6) {
-    var box = document.getElementById('code');
-    box.textContent = code;
-    box.hidden = false;
-    document.getElementById('open').href = 'tripmatch://join/' + code;
-  } else {
-    // Ohne Code kann der Knopf nichts ausrichten — dann bleibt nur der Weg
-    // ueber die Eingabe von Hand.
-    document.getElementById('open').remove();
-    document.getElementById('hint').textContent =
-      'In diesem Link fehlt der Einladungscode. Frag noch einmal nach — sechs Zeichen, die du in der App unter „Reise beitreten“ eingibst.';
-  }
-</script>
+<footer>
+  &copy; 2026 TripMatch &middot; <a href="datenschutz/">Datenschutz</a> &middot; <a href="impressum/">Impressum</a>
+</footer>
 </body>
 </html>
