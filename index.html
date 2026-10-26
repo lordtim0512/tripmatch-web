@@ -2,188 +2,396 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <title>TripMatch — Reiseziele gemeinsam finden</title>
-<meta name="description" content="Swipen statt diskutieren: Mit TripMatch findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.">
+<meta name="description" content="Swipen statt streiten: Mit TripMatch findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-1.613%20-1.613%203.226%203.226%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22f%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2360A5FA%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF6B6B%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%22-1.613%22%20y%3D%22-1.613%22%20width%3D%223.226%22%20height%3D%223.226%22%20fill%3D%22url(%23f)%22%2F%3E%3Ccircle%20r%3D%220.91%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%220.18%22%2F%3E%3Cpolygon%20points%3D%220.289%2C-0.593%200.13%2C0.064%20-0.13%2C-0.064%22%20fill%3D%22%23fff%22%2F%3E%3Cpolygon%20points%3D%22-0.289%2C0.593%200.13%2C0.064%20-0.13%2C-0.064%22%20fill%3D%22%23fff%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E">
+<link rel="canonical" href="https://tripmatch-app.de/">
+<!-- Safari auf dem iPhone blendet damit oben das Banner „TripMatch – Laden/Öffnen“ ein. -->
+<meta name="apple-itunes-app" content="app-id=6817438689">
+<!-- Vorschau beim Teilen (WhatsApp, iMessage, Telegram, …). -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tripmatch-app.de/">
+<meta property="og:site_name" content="TripMatch">
+<meta property="og:title" content="TripMatch — Reiseziele gemeinsam finden">
+<meta property="og:description" content="Swipen statt streiten: Mit TripMatch findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.">
+<meta property="og:image" content="https://tripmatch-app.de/bilder/vorschau.jpg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="TripMatch-Logo mit dem Satz: Gemeinsam das Reiseziel finden">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
 <style>
+  /* Farben und Schrift wie auf apple.com: fast schwarzer Text, Grau fuer
+     Nebensaechliches, Abschnitte im Wechsel weiss und #f5f5f7. Die
+     Systemschrift ist auf Apple-Geraeten SF Pro. */
   :root {
     color-scheme: light;
-    --text: #252525;
-    --muted: #717182;
-    --bg: #F5F6F9;
-    --surface: #FFFFFF;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --weiss: #ffffff;
+    --grau: #f5f5f7;
+    --linie: #d2d2d7;
+    --verlauf: linear-gradient(135deg, #60A5FA, #FF6B6B);
+    --rand: max(22px, env(safe-area-inset-left), env(safe-area-inset-right));
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; }
+
+  /* Der Grund hinter der Seite ist das Grau der Fusszeile: Zieht man auf dem
+     iPhone ueber das Ende hinaus, erscheint dort kein weisser Streifen. Oben
+     uebernimmt der weisse Kopfbereich, und theme-color faerbt die Leiste von
+     Safari passend ein. */
+  html { background: var(--grau); }
   body {
+    margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    background: var(--bg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--weiss);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
     color: var(--text);
     -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+  main { flex: 1; }
+
+  section { padding: 96px var(--rand); text-align: center; }
+  section.grau { background: var(--grau); }
+  .spalte { max-width: 980px; margin: 0 auto; }
+
+  h2 {
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin: 0 0 56px;
   }
 
-  /* Oben ein Schimmer des Verlaufs, damit die Seite nicht grau anfaengt. */
-  .glow {
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 520px;
-    background:
-      radial-gradient(60% 70% at 30% 0%, #60A5FA33, transparent 70%),
-      radial-gradient(60% 70% at 75% 10%, #FF6B6B2e, transparent 70%);
-    pointer-events: none;
-  }
+  /* ------------------------------------------------ Kopf */
 
-  main {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 72px 16px 40px;
-    text-align: center;
+  .kopf {
+    padding-top: calc(88px + env(safe-area-inset-top));
+    padding-bottom: 104px;
   }
-
   .logo {
-    width: 168px;
-    height: 168px;
-    margin: 0 auto 28px;
-    border-radius: 38px;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 36px;
+    border-radius: 40px;
     overflow: hidden;
-    box-shadow: 0 18px 48px rgba(96, 120, 200, 0.35), 0 4px 12px rgba(11, 18, 32, 0.12);
+    box-shadow: 0 24px 60px rgba(96, 120, 200, 0.28);
   }
   .logo svg { display: block; width: 100%; height: 100%; }
-
   h1 {
-    font-size: 52px;
+    font-size: 80px;
     line-height: 1.05;
-    letter-spacing: -1.6px;
-    margin: 0 0 14px;
-    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin: 0 0 16px;
+    /* Der Verlauf nur hier: Bei einem grossen, kurzen Wort traegt er. Auf
+       dem Claim darunter war Hellblau auf Weiss zu blass zum Lesen. */
+    background: var(--verlauf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 0.06em;
   }
   .claim {
-    font-size: 19px;
-    line-height: 1.5;
-    color: var(--muted);
-    margin: 0 auto 36px;
-    max-width: 400px;
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    margin: 0 auto 40px;
+    max-width: 640px;
   }
-
   a.store {
     display: inline-block;
-    padding: 16px 32px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
-    color: #fff;
-    font-size: 17px;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 10px 28px rgba(255, 107, 107, 0.3);
-    transition: transform 0.15s ease;
+    transition: transform 0.15s ease, opacity 0.15s ease;
   }
+  a.store img { display: block; width: auto; height: 54px; }
+  .android { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+  a.store:hover { opacity: 0.85; }
   a.store:active { transform: scale(0.97); }
+
+  /* ------------------------------------------------ So geht's */
 
   .schritte {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 56px 0 0;
+    gap: 32px;
+    margin: 0;
     padding: 0;
     list-style: none;
-  }
-  .schritte li {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 20px 14px;
-    box-shadow: 0 4px 16px rgba(11, 18, 32, 0.06);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .nr {
-    width: 32px;
-    height: 32px;
-    margin: 0 auto 12px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #60A5FA, #FF6B6B);
-    color: #fff;
+    display: block;
+    font-size: 72px;
+    line-height: 1;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 32px;
-    text-align: center;
+    margin-bottom: 12px;
+    background: var(--verlauf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .schritte strong { display: block; font-size: 16px; }
+
+  /* ------------------------------------------------ Screenshots */
+
+  /* Eine waagrechte Reihe zum Durchwischen. Sie bricht aus der Spalte aus
+     und laeuft bis an den Bildschirmrand. */
+  .galerie {
+    display: flex;
+    gap: 40px;
+    margin: 0 calc(-1 * var(--rand));
+    padding: 8px max(var(--rand), calc(50% - 490px)) 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--rand);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .galerie::-webkit-scrollbar { display: none; }
+  .galerie figure { flex: none; margin: 0; scroll-snap-align: center; }
+
+  /* Der Rahmen eines iPhones: schwarzer Rand, runde Ecken, die Dynamic
+     Island obendrauf. Gezeichnet statt als Bild, damit er scharf bleibt. */
+  .iphone {
+    position: relative;
+    width: 260px;
+    padding: 9px;
+    border-radius: 48px;
+    background: #1d1d1f;
+    box-shadow: 0 0 0 2px #3a3a3c inset, 0 30px 60px rgba(0, 0, 0, 0.18);
+  }
+  .iphone::after {
+    content: "";
+    position: absolute;
+    top: 19px;
+    left: 50%;
+    width: 78px;
+    height: 23px;
+    margin-left: -39px;
+    border-radius: 12px;
+    background: #000;
+  }
+  .iphone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 39px;
+  }
+  .galerie figcaption {
+    margin-top: 24px;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* ------------------------------------------------ Rezensionen */
 
   .rezensionen {
     display: grid;
-    gap: 12px;
-    margin-top: 48px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
     text-align: left;
+    align-items: start;
   }
   .rezension {
     margin: 0;
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 16px rgba(11, 18, 32, 0.06);
+    background: var(--weiss);
+    border-radius: 18px;
+    padding: 32px;
   }
-  .sterne { color: #F5A524; font-size: 16px; letter-spacing: 2px; margin-bottom: 8px; }
-  .rezension strong { display: block; font-size: 16px; margin-bottom: 6px; }
-  .rezension blockquote { margin: 0 0 12px; font-size: 15px; line-height: 1.55; }
-  .rezension figcaption { font-size: 13px; color: var(--muted); }
+  .sterne { color: #ff9500; font-size: 17px; letter-spacing: 2px; margin-bottom: 14px; }
+  .rezension strong { display: block; font-size: 21px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .rezension blockquote { margin: 0 0 18px; font-size: 17px; line-height: 1.5; }
+  .rezension figcaption { font-size: 14px; color: var(--muted); }
+
+  /* ------------------------------------------------ Privatsphaere */
+
+  .privat {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .privat svg {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 14px;
+    fill: none;
+    stroke: #FF6B6B;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .mehr { margin: 44px 0 0; font-size: 17px; }
+  .mehr a { color: #0066cc; text-decoration: none; }
+  .mehr a:hover { text-decoration: underline; }
+
+  /* ------------------------------------------------ Schluss */
+
+  .schluss h2 { margin-bottom: 32px; }
+
+  /* ------------------------------------------------ Fuss */
 
   footer {
-    position: relative;
-    padding: 24px 16px 32px;
-    text-align: center;
-    font-size: 13px;
+    background: var(--grau);
+    padding: 20px var(--rand) calc(28px + env(safe-area-inset-bottom));
+    font-size: 12px;
     color: var(--muted);
+    text-align: center;
   }
-  footer a { color: var(--muted); }
+  footer .spalte { border-top: 1px solid var(--linie); padding-top: 18px; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 520px) {
-    main { padding-top: 56px; }
-    .logo { width: 136px; height: 136px; border-radius: 31px; }
-    h1 { font-size: 42px; }
-    .claim { font-size: 17px; }
-    .schritte { grid-template-columns: 1fr; text-align: left; }
-    .schritte li { display: flex; align-items: center; gap: 14px; padding: 16px; }
-    .nr { flex: none; margin: 0; }
+  /* ------------------------------------------------ Handy */
+
+  @media (max-width: 734px) {
+    section { padding-top: 64px; padding-bottom: 64px; }
+    .kopf { padding-top: calc(56px + env(safe-area-inset-top)); padding-bottom: 72px; }
+    .logo { width: 140px; height: 140px; border-radius: 31px; margin-bottom: 28px; }
+    h1 { font-size: 48px; }
+    .claim { font-size: 21px; }
+    h2 { font-size: 32px; margin-bottom: 36px; }
+    .schritte { grid-template-columns: 1fr; gap: 28px; font-size: 21px; }
+    .nr { font-size: 56px; margin-bottom: 6px; }
+    .galerie { gap: 24px; }
+    .iphone { width: 230px; border-radius: 42px; padding: 8px; }
+    .iphone::after { top: 17px; width: 68px; height: 20px; margin-left: -34px; }
+    .iphone img { border-radius: 34px; }
+    .rezensionen { grid-template-columns: 1fr; gap: 16px; }
+    .rezension { padding: 24px; }
+    .privat { grid-template-columns: 1fr 1fr; gap: 32px 16px; font-size: 17px; }
+    a.store img { height: 50px; }
   }
 </style>
 </head>
 <body>
-<div class="glow"></div>
 <main>
-  <div class="logo" role="img" aria-label="TripMatch-Logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.613 -1.613 3.226 3.226"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient></defs><rect x="-1.613" y="-1.613" width="3.226" height="3.226" fill="url(#g)"/><circle r="0.91" fill="none" stroke="#fff" stroke-width="0.18"/><polygon points="0.289,-0.593 0.13,0.064 -0.13,-0.064" fill="#fff"/><polygon points="-0.289,0.593 0.13,0.064 -0.13,-0.064" fill="#fff" fill-opacity="0.4"/></svg></div>
-  <h1>TripMatch</h1>
-  <p class="claim">Swipen statt diskutieren: So findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.</p>
+  <section class="kopf">
+    <div class="logo" role="img" aria-label="TripMatch-Logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.613 -1.613 3.226 3.226"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient></defs><rect x="-1.613" y="-1.613" width="3.226" height="3.226" fill="url(#g)"/><circle r="0.91" fill="none" stroke="#fff" stroke-width="0.18"/><polygon points="0.289,-0.593 0.13,0.064 -0.13,-0.064" fill="#fff"/><polygon points="-0.289,0.593 0.13,0.064 -0.13,-0.064" fill="#fff" fill-opacity="0.4"/></svg></div>
+    <h1>TripMatch</h1>
+    <p class="claim">Swipen statt streiten:<br>So findest du mit deinen Freunden das Reiseziel, auf das sich alle freuen.</p>
+    <a class="store" href="https://apps.apple.com/de/app/tripmatch/id6817438689"><img src="bilder/app-store.svg" alt="Laden im App Store" width="162" height="54"></a>
+    <p class="android" lang="en">Android coming soon!</p>
+  </section>
 
-  <a class="store" href="https://apps.apple.com/de/app/tripmatch/id6817438689">Im App Store laden</a>
+  <section class="grau">
+    <div class="spalte">
+      <h2>So einfach geht&rsquo;s:</h2>
+      <ol class="schritte">
+      <li><span class="nr">1</span>Gruppe erstellen</li>
+      <li><span class="nr">2</span>Swipen</li>
+      <li><span class="nr">3</span>Match finden</li>
+      </ol>
+    </div>
+  </section>
 
-  <ol class="schritte">
-    <li><div class="nr">1</div><strong>Gruppe gr&uuml;nden</strong></li>
-    <li><div class="nr">2</div><strong>Swipen</strong></li>
-    <li><div class="nr">3</div><strong>Match finden</strong></li>
-  </ol>
+  <section>
+    <div class="spalte">
+      <h2>Ein Blick in die App:</h2>
+      <div class="galerie" aria-label="Screenshots">
+      <figure>
+        <div class="iphone"><img src="bilder/01.jpg" alt="Eine Länderkarte zum Swipen, hier Malta" width="520" height="1127"></div>
+        <figcaption>Swipe dich durch Europa.</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/02.jpg" alt="Die Lobby mit Einladungscode und Mitgliedern" width="520" height="1127"></div>
+        <figcaption>Freunde per Code einladen.</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/03.jpg" alt="Das Zwischenergebnis nach Runde 1" width="520" height="1127" loading="lazy"></div>
+        <figcaption>Erst die Länder …</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/04.jpg" alt="Eine Stadtkarte zum Swipen, hier Mykonos" width="520" height="1127" loading="lazy"></div>
+        <figcaption>… dann die Städte.</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/05.jpg" alt="Das Endergebnis mit Link zu Unterkünften" width="520" height="1127" loading="lazy"></div>
+        <figcaption>Findet eure Matches.</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/06.jpg" alt="Gruppe anlegen mit Reisestil, Reisezeit und Budget" width="520" height="1127" loading="lazy"></div>
+        <figcaption>Wählt euren Reisestil.</figcaption>
+      </figure>
+      <figure>
+        <div class="iphone"><img src="bilder/07.jpg" alt="Der Startbildschirm mit allen Reisen" width="520" height="1127" loading="lazy"></div>
+        <figcaption>Alle Reisen im Blick.</figcaption>
+      </figure>
+      </div>
+    </div>
+  </section>
 
-  <section class="rezensionen" aria-label="Rezensionen">
-    <figure class="rezension">
-      <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <strong>Spannende Lösung für Urlaubssuche</strong>
-      <blockquote>Normalerweise ist es schwer mit den Jungs ein gemeinsames Urlaubsziel zu finden, was am Ende auch für alle passt. Diese App löst jedoch auf spielerische Weise dieses Problem.<br><br>Klare Weiterempfehlung👍</blockquote>
-      <figcaption>abecki1609 &middot; App Store</figcaption>
-    </figure>
-    <figure class="rezension">
-      <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <strong>Perfekte App für die nächste Reise! ⭐⭐⭐⭐⭐</strong>
-      <blockquote>TripMatch ist eine richtig coole und innovative App! Die Idee, Reiseziele gemeinsam mit Freunden zu entdecken und den nächsten Urlaub unkompliziert zu planen, finde ich einfach genial. Die App macht Lust darauf, neue Orte kennenzulernen, gemeinsam Abenteuer zu erleben und unvergessliche Erinnerungen zu schaffen. Besonders das Konzept, die Reiseplanung mit Freunden zu verbinden, hebt TripMatch von anderen Apps ab. Eine tolle Idee mit viel Potenzial – ich freue mich darauf, die App weiter zu nutzen und kann sie jedem empfehlen, der gerne reist! 🌍✈️</blockquote>
-      <figcaption>DAchla7 &middot; App Store</figcaption>
-    </figure>
+  <section class="grau">
+    <div class="spalte">
+      <h2>Das sagen andere:</h2>
+      <div class="rezensionen">
+      <figure class="rezension">
+        <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Spannende Lösung für Urlaubssuche</strong>
+        <blockquote>Normalerweise ist es schwer mit den Jungs ein gemeinsames Urlaubsziel zu finden, was am Ende auch für alle passt. Diese App löst jedoch auf spielerische Weise dieses Problem.<br><br>Klare Weiterempfehlung👍</blockquote>
+        <figcaption>abecki1609</figcaption>
+      </figure>
+      <figure class="rezension">
+        <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Perfekte App für die nächste Reise! ⭐⭐⭐⭐⭐</strong>
+        <blockquote>TripMatch ist eine richtig coole und innovative App! Die Idee, Reiseziele gemeinsam mit Freunden zu entdecken und den nächsten Urlaub unkompliziert zu planen, finde ich einfach genial. Die App macht Lust darauf, neue Orte kennenzulernen, gemeinsam Abenteuer zu erleben und unvergessliche Erinnerungen zu schaffen. Besonders das Konzept, die Reiseplanung mit Freunden zu verbinden, hebt TripMatch von anderen Apps ab. Eine tolle Idee mit viel Potenzial – ich freue mich darauf, die App weiter zu nutzen und kann sie jedem empfehlen, der gerne reist! 🌍✈️</blockquote>
+        <figcaption>DAchla7</figcaption>
+      </figure>
+      <figure class="rezension">
+        <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Urlaub 2026</strong>
+        <blockquote>Als große Gruppe konnten wir uns auf kein Reiseziel einigen, deshalb suchten wir einer anderen Lösung. TripMatch konnte alle Probleme beseitigen und wir hatten nach wenigen Minuten einen Urlaub gebucht. Nächstes Jahr wird wieder über TripMatch gebucht👍🙏</blockquote>
+        <figcaption>Jannisslp</figcaption>
+      </figure>
+      <figure class="rezension">
+        <div class="sterne" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Gute Idee, einfach umgesetzt</strong>
+        <blockquote>Endlich eine unkomplizierte Lösung, um das nächste Reiseziel mit Freunden zu finden! Die Idee, sich gemeinsam durch verschiedene Länder und Städte zu swipen, finde ich echt cool. Bin gespannt, wie sich die App weiterentwickelt!</blockquote>
+        <figcaption>~kmdd</figcaption>
+      </figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="spalte">
+      <h2>Deine Daten bleiben deine:</h2>
+      <ul class="privat">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Keine Werbung, keine Tracker</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ohne E-Mail und Passwort</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Gespeichert in Frankfurt</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Nach 14 Tagen gel&ouml;scht</li>
+      </ul>
+      <p class="mehr"><a href="datenschutz/">Zur Datenschutzerkl&auml;rung</a></p>
+    </div>
+  </section>
+
+  <section class="grau schluss">
+    <div class="spalte">
+      <h2>Bereit f&uuml;r die n&auml;chste Reise?</h2>
+      <a class="store" href="https://apps.apple.com/de/app/tripmatch/id6817438689"><img src="bilder/app-store.svg" alt="Laden im App Store" width="162" height="54"></a>
+    <p class="android" lang="en">Android coming soon!</p>
+    </div>
   </section>
 </main>
 <footer>
-  &copy; 2026 TripMatch &middot; <a href="datenschutz/">Datenschutz</a> &middot; <a href="impressum/">Impressum</a>
+  <div class="spalte">Copyright &copy; 2026 TripMatch &nbsp;|&nbsp; <a href="datenschutz/">Datenschutz</a> &nbsp;|&nbsp; <a href="impressum/">Impressum</a></div>
 </footer>
 </body>
 </html>
