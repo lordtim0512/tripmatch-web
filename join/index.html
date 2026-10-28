@@ -86,7 +86,7 @@
 
 <script>
   // Der Code steht in der Adresse als ?c=ABC123. Ein Pfad wie /join/ABC123
-  // waere huebscher, aber GitHub Pages liefert nur statische Dateien aus und
+  // waere huebscher, aber der Webserver liefert nur statische Dateien aus und
   // kennt keine Platzhalter im Pfad — das waere dort ein 404.
   var raw = new URLSearchParams(location.search).get('c') || '';
   var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
